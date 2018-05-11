@@ -1,5 +1,5 @@
 from talon.voice import Context, Key, press, Str
-from user import utils
+from user.utils import parse_words_as_integer
 
 # It is recommended to use this script in tandem with Vimium, a Google Chrome plugin for controlling the browser via keyboard
 # https://vimium.github.io/
@@ -46,7 +46,7 @@ def forward(m):
     press('cmd-]')
 
 def jump_tab(m):
-    tab_number = utils.pull_number(m, ignore_initial_count=1)
+    tab_number = parse_words_as_integer(m._words[1:])
     if tab_number != None and tab_number > 0 and tab_number < 9:
         press('cmd-%s'%tab_number)
 
@@ -90,4 +90,10 @@ context.keymap({
 
     'refocus page': refocus_page,
     '[refocus] dev tools': open_focus_devtools,
+
+    # Clipboard
+    'cut': Key('cmd-x'),
+    'copy': Key('cmd-c'),
+    'paste': Key('cmd-v'),
+    'paste same style': Key('cmd-alt-shift-v'),
 })

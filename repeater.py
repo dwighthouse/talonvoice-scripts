@@ -1,5 +1,5 @@
 from talon.voice import Context, Rep, talon
-from user import utils
+from user.utils import parse_words_as_integer
 
 ctx = Context('repeater')
 
@@ -7,12 +7,9 @@ ctx = Context('repeater')
 #         * Apply a timeout after which the command will not repeat previous actions
 #         * Prevent stacking of repetitions upon previous repetitions
 def repeat(m):
-    repeat_count = utils.pull_number(m, ignore_initial_count=1)
+    repeat_count = parse_words_as_integer(m._words[1:])
 
-    if repeat_count == None:
-        return
-
-    if repeat_count >= 2:
+    if repeat_count != None and repeat_count >= 2:
         repeater = Rep(repeat_count - 1)
         repeater.ctx = talon
         return repeater(None)

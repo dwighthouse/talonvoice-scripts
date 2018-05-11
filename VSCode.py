@@ -1,10 +1,10 @@
 from talon.voice import Context, Key, press, Str
-from user import utils
+from user.utils import parse_words_as_integer
 
 context = Context('VSCode', bundle='com.microsoft.VSCode')
 
 def jump_to_line(m):
-    line_number = utils.pull_number(m, ignore_initial_count=1)
+    line_number = parse_words_as_integer(m._words[1:])
 
     if line_number == None:
         return

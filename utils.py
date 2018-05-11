@@ -19,15 +19,15 @@ for i, w in enumerate(['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'se
     number_conversions[w] = str(i)
     number_conversions['%s\\number'%(w)] = str(i)
 
-def pull_number(m, ignore_initial_count):
-    # TODO: Once implemented, use number input value rather than manually parsing number words
+def parse_words_as_integer(words):
+    # TODO: Once implemented, use number input value rather than manually parsing number words with this function
 
-    # Ignore trigger word 'line' and any potential trailing non-number words
-    number_words = list(itertools.takewhile(lambda w: w not in number_conversions, m._words[ignore_initial_count:]))
+    # Ignore any potential trailing non-number words
+    number_words = list(itertools.takewhile(lambda w: w not in number_conversions, words))
 
     # Somehow, no numbers were detected
     if len(number_words) == 0:
-        return
+        return None
 
     # Map number words to simple number values
     number_values = list(map(lambda w: number_conversions[w.word], number_words))

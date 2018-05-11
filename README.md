@@ -19,7 +19,7 @@ Where `SCRIPT.py` is the name of the desired Script.
 
 Talon (if running), will immediately detect the addition (or change) and adjust its internal list of available commands with the new content.
 
-> **Warning:** If the copied Script contains a conflicting command, the Script loaded most recently will take precedence.
+> **Warning:** If a Script contains a conflicting command, the command in the Script saved or created most recently will take precedence.
 
 
 ## Utilities
