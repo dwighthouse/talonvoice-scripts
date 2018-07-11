@@ -3,6 +3,8 @@
 # "talon wake" - Re-enables recognition
 # And other commands for activating and controlling the various eye tracking modes
 
+# WARNING: Because this script uses ContextGroup, changes to the script may not be recognized until a Talon restart.
+
 from talon import app
 from talon.api import lib
 from talon.voice import Context, ContextGroup, talon
