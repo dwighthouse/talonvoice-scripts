@@ -5,28 +5,38 @@
 
 # WARNING: Because this script uses ContextGroup, changes to the script may not be recognized until a Talon restart.
 
-from talon import app, applescript
+from talon import app
 from talon.api import lib
 from talon.engine import engine
 from talon.voice import Context, ContextGroup, talon
-import eye_mouse
+import eye_mouse, os
 
 # Because the Voice Commands on this Context are in their own ContextGroup, they are treated separatedly from the other ContextGroups (including the default one: talon)
 # By disabling the default talon ContextGroup, we can effectively turn off recognition, save for the Voice Commands in this file
-def set_voice_enabled(enable):
-    if enable:
-        talon.enable()
-        app.icon_color(0, 0.7, 0, 1)
-    else:
-        talon.disable()
-        app.icon_color(1, 0, 0, 1)
+def enable_talon():
+    talon.enable()
+    app.icon_color(0, 0.7, 0, 1)
+    lib.menu_check(b'!Enable Speech Recognition', True)
 
-    lib.menu_check(b'!Enable Speech Recognition', enable)
+    # Ensure Dragon dictation is off, even if it wasn't enabled
+    engine.mimic('go to sleep'.split())
+
+def disable_talon():
+    talon.disable()
+    app.icon_color(1, 0, 0, 1)
+    lib.menu_check(b'!Enable Speech Recognition', False)
+
+def enable_dragon_mode():
+    disable_talon()
+    engine.mimic('wake up'.split())
 
 # Creates extra menu item for toggling Speech Recognition
 def on_menu(item):
     if item == '!Enable Speech Recognition':
-        set_voice_enabled(not talon.enabled)
+        if talon.enabled:
+            disable_talon()
+        else:
+            enable_talon()
 
 app.register('menu', on_menu)
 
@@ -60,7 +70,7 @@ def set_debug_enabled(enable):
 
 def open_debug_log(m):
     # Opens the Talon logs in Console.app, which is where print statements and debugging data is usually sent unless Repl is active
-    applescript.run(f'do shell script "open ~/.talon/talon.log"')
+    system.os('open -a Console ~/.talon/talon.log')
 
 
 
@@ -76,8 +86,12 @@ context = Context('talon_control', group=context_group)
 
 context.keymap({
     # Enable/disable voice recognition
-    'talon [voice] sleep': lambda m: set_voice_enabled(False),
-    'talon [voice] wake': lambda m: set_voice_enabled(True),
+    'talon [voice] sleep': lambda m: disable_talon(),
+    'talon [voice] wake': lambda m: enable_talon(),
+
+    # Switch between Dragon dictation and Talon recognition
+    'talon dragon mode': lambda m: enable_dragon_mode(),
+    'talon standard mode': lambda m: enable_talon(),
 
     # Enable/disable debug logging to console
     'talon [voice] debugging on': lambda m: set_debug_enabled(True),
@@ -96,5 +110,5 @@ context.keymap({
 })
 
 # Startup
-set_voice_enabled(talon.enabled)
+enable_talon()
 context_group.load()
