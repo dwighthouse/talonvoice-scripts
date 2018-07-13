@@ -13,9 +13,12 @@ holdable_keys = {
     'shift': 'shift',
     'alt': 'alt',
     'option': 'alt',
-    'function key': 'fn',
-    'funky': 'fn',
-    'effin': 'fn',
+
+    # At this time, fn key is not handled the same as other modifier keys due to underlying OS implementations
+    # Talon can detect this, but creating shortcuts with the fn key is still a mystery, so these are disabled for now
+    # 'function key': 'fn',
+    # 'funky': 'fn',
+    # 'effin': 'fn',
 }
 
 glyph_keys = {}
@@ -38,7 +41,7 @@ glyph_keys.update({
 
     'exclamation [point]': '!',
     'at sign': '@',
-    '(pound [sign] | hash [sign] | number sign)': '#', # Can't get recognition of "number sign"
+    '(pound [sign] | hash [sign] | number sign)': '#',
     'dollar [sign]': '$',
     'percent [sign]': '%',
     'caret': '^',
@@ -66,17 +69,17 @@ glyph_keys.update({
     '([forward] slash | divide)': '/',
     '(question [mark] | question-mark)': '?',
 
-    '[(el | left)] paren[theses]': '(', # Can't get recognition of "left paren" or "parentheses"
-    '(are | right) paren[theses]': ')', # Can't get recognition of "right paren" or "are parentheses"
+    '[(L | left)] (paren | parentheses | parenthesis)': '(',
+    '(R | right) (paren | parentheses | parenthesis)': ')',
 
-    '([(el | left)] square [bracket] | [(el | left)] bracket)': '[',
-    '((are | right) square [bracket] | [(are | right)] bracket)': ']',
+    '([(L | left)] square [bracket] | [(L | left)] bracket)': '[',
+    '((R | right) square [bracket] | [(R | right)] bracket)': ']',
 
-    '[(el | left)] [curly] brace': '{',
-    '(are | right) [curly] brace': '}',
+    '[(L | left)] [curly] brace': '{',
+    '(R | right) [curly] brace': '}',
 
-    '([(el | left)] angle | langle | less than [symbol])': '<',
-    '((are | right) angle | rangle | greater than [symbol])': '>',
+    '([(L | left)] angle | langle | less than [symbol])': '<',
+    '((R | right) angle | rangle | greater than [symbol])': '>',
 })
 
 # Function Keys
@@ -100,7 +103,7 @@ operation_keys.update({
     'escape': 'escape',
     '(backspace | backward delete)': 'backspace',
     'tab': 'tab',
-    '(caps [lock] | capslock)': 'capslock', # Currently doesn't actually toggle caps lock, hmmm
+    '(caps [lock] | capslock)': 'capslock', # Currently doesn't actually toggle caps lock system wide
     '(enter | return)': 'return',
     '(space | spacebar)': 'space',
 

@@ -70,7 +70,7 @@ def set_debug_enabled(enable):
 
 def open_debug_log(m):
     # Opens the Talon logs in Console.app, which is where print statements and debugging data is usually sent unless Repl is active
-    system.os('open -a Console ~/.talon/talon.log')
+    os.system('open -a Console ~/.talon/talon.log')
 
 
 
@@ -109,6 +109,6 @@ context.keymap({
     'talon eye camera': lambda m: on_eye_control('Eye Tracking >> Show Camera Overlay'),
 })
 
-# Startup
+# Startup.
 enable_talon()
 context_group.load()

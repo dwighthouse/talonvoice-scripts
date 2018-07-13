@@ -1,3 +1,8 @@
+# Various generic tools
+# To use in other files, for example: "from user.utils import parse_words_as_integer" or "from .utils import parse_words_as_integer"
+
+# NOTE: If you see an error from Talon about "ImportError: cannot import name X", where X is one of these functions, restart Talon
+
 import itertools
 
 # Useful for identifying app/window information for context selection
@@ -15,9 +20,11 @@ number_conversions = {
     'oh': '0', # 'oh' => zero
 }
 for i, w in enumerate(['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']):
-    number_conversions[str(i)] = str(i)
-    number_conversions[w] = str(i)
-    number_conversions['%s\\number'%(w)] = str(i)
+    number_conversions.update({
+        str(i): str(i),
+        w: str(i),
+        '%s\\number'%(w): str(i),
+    })
 
 # TODO: Once implemented, use number input value rather than manually parsing number words with this function
 def parse_words_as_integer(words):

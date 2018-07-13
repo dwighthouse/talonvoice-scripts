@@ -1,7 +1,7 @@
+# Used for repeating previous Voice Commands
+
 from talon.voice import Context, Rep, talon
 from user.utils import parse_words_as_integer
-
-ctx = Context('repeater')
 
 # TODO: This could be made more intelligent:
 #         * Apply a timeout after which the command will not repeat previous actions
@@ -14,6 +14,7 @@ def repeat(m):
         repeater.ctx = talon
         return repeater(None)
 
-ctx.keymap({
+context = Context('repeater')
+context.keymap({
     'repeat (0 | oh | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9)+': repeat,
 })
